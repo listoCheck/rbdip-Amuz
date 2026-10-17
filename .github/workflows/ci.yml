@@ -50,3 +50,6 @@ jobs:
             target/checkstyle-result.xml
             target/pmd.xml
           if-no-files-found: ignore
+
+      - name: Require all laboratory gates
+        run: python3 -c "import json; s=json.load(open('score.json')); assert s['score'] == s['max_score'], s"
