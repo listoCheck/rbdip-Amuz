@@ -18,10 +18,11 @@ public class OrderPersistence {
     }
 
     public Order save(CreateOrderRequest request, List<OrderPreparation.PreparedItem> prepared) {
-        Customer customer = customers.findFirstByFullNameAndAddressAndPhone(
-                request.customerFullName(), request.customerAddress(), request.customerPhone())
-                .orElseGet(() -> customers.save(new Customer(
-                        request.customerFullName(), request.customerAddress(), request.customerPhone())));
+        Customer candidate = new Customer(
+                request.customerFullName(), request.customerAddress(), request.customerPhone());
+        Customer customer = customers.findFirstByFirstNameAndLastNameAndAddressAndPhone(
+                candidate.getFirstName(), candidate.getLastName(), candidate.getAddress(), candidate.getPhone())
+                .orElseGet(() -> customers.save(candidate));
         Order order = orders.save(new Order(customer, "new"));
         for (OrderPreparation.PreparedItem item : prepared) {
             items.save(new OrderItem(order.getId(), item.product(), item.quantity()));
