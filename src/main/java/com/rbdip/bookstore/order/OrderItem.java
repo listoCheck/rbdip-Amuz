@@ -24,6 +24,10 @@ public class OrderItem {
     private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

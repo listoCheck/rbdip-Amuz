@@ -6,6 +6,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +28,9 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items = new ArrayList<>();
+
     @Column(nullable = false)
     private String status;
 
@@ -43,6 +49,8 @@ public class Order {
         this.customer = customer;
         this.status = status;
     }
+
+    public List<OrderItem> getItems() { return List.copyOf(items); }
 
     public Long getId() {
         return id;

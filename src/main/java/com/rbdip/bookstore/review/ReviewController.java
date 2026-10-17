@@ -35,6 +35,7 @@ public class ReviewController {
                 .map(r -> Map.<String, Object>of(
                         "authorName", r.getAuthorName(),
                         "rating", r.getRating(),
+                        "verifiedPurchase", r.isVerifiedPurchase(),
                         "comment", r.getComment() == null ? "" : r.getComment()))
                 .toList();
     }

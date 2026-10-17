@@ -27,6 +27,9 @@ public class Review {
 
     private String comment;
 
+    @Column(name = "verified_purchase", nullable = false)
+    private boolean verifiedPurchase;
+
     @Column(name = "created_at", nullable = false)
     private Instant createdAt = Instant.now();
 
@@ -35,11 +38,18 @@ public class Review {
     }
 
     public Review(Long productId, String authorName, Integer rating, String comment) {
+        this(productId, authorName, rating, comment, false);
+    }
+
+    public Review(Long productId, String authorName, Integer rating, String comment, boolean verifiedPurchase) {
+        this.verifiedPurchase = verifiedPurchase;
         this.productId = productId;
         this.authorName = authorName;
         this.rating = rating;
         this.comment = comment;
     }
+
+    public boolean isVerifiedPurchase() { return verifiedPurchase; }
 
     public Long getId() {
         return id;
